@@ -6,7 +6,7 @@ public class Hand : MonoBehaviour
 {
     public List<Card> cardsInHand = new List<Card>();
     public Transform cardParent;
-    public float cardSpacing = 1.2f;
+    public float cardSpacing = 0.8f;
 
     public void AddCard(Card cardToAdd)
     {
