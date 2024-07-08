@@ -9,22 +9,17 @@ public class PlayerCard : MonoBehaviour
     public int health;
     public int stamina;
     public SpriteRenderer spriteRenderer;
+    public ValueTracker healthBar;
+    public GameObject staminaBar;
     private bool isDragging = false;
     private Vector2 dragOffset;
 
-    [Header("UI ELEMENTS")]
-    public TextMeshProUGUI healthText;
-    public TextMeshProUGUI staminaText;
 
-    private Vector3 healthTextOffset;
-    private Vector3 staminaTextOffset;
 
     private void Start()
     {
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        healthTextOffset = healthText.transform.position - transform.position;
-        staminaTextOffset = staminaText.transform.position - transform.position;
         UpdateUI();
     }
 
@@ -39,15 +34,11 @@ public class PlayerCard : MonoBehaviour
 
     private void UpdateUI()
     {
-        healthText.text = $"{health}";
-        staminaText.text = $"{stamina}";
+        healthBar.changeSprite(health);
+
     }
 
-        private void UpdateUIPosition()
-    {
-            healthText.transform.position = transform.position + healthTextOffset;
-            staminaText.transform.position = transform.position + staminaTextOffset;
-    }
+
 
         void OnMouseDown()
     {
@@ -70,12 +61,9 @@ public class PlayerCard : MonoBehaviour
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = mousePosition + dragOffset;
         Debug.Log("Dragging: " + (mousePosition + dragOffset));
+        UpdateUI();
         }
     }
 
-        private void LateUpdate()
-        {
-            UpdateUIPosition();
-        }
 
 }
