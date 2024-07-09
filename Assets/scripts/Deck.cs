@@ -99,7 +99,7 @@ public class Deck : MonoBehaviour
     List<int> sortCardsMerge(List<int> arr) //using a list til cards are able to imliment this
     {                                       //realisitcally am i going to be sorting large numbers 
                                             //of cards enough to justify this? no. Was it fun? Yes.
-        if(arr.Count() < 2)
+        if(arr.Count() < 2)                 //O(n log n)?
         {
             return arr;
         }
@@ -141,5 +141,22 @@ public class Deck : MonoBehaviour
             j++;
         }
         return mergedList;
+    }
+
+    List<int> cardsInsertionSort(List<int> arr) //likely a more realistic sort for the numbers we will be looking at
+                                                //O(n^2) worstcase
+    {
+        for(int i=0;i<arr.Count;i++)
+        {
+            int j = i;
+            while(j>0 && arr[j-1] > arr[j])
+            {
+                int temp = arr[j];
+                arr[j] = arr[j-1];
+                arr[j-1] = temp;
+                j--;
+            }
+        }
+        return arr;
     }
 }
