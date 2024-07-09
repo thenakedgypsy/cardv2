@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Deck : MonoBehaviour
 {
     public List<Card> deck = new List<Card>();
@@ -52,54 +53,56 @@ public class Deck : MonoBehaviour
 
     }
 
-    bool containsCard(Card target) //binary search because why not
-    {
-        int low = 0;
-        int high = deck.Count() - 1;
-        while(low <= high)
-        {
-            middle = Math.Ceiling((low + high) / 2);
-            if(deck[middle] == target)
+   bool containsCard(int target, List<int> cardList) //binary search because why not
+   {
+       int low = 0;
+       int high = cardList.Count - 1;
+       while(low <= high)
+       {
+           int middle = low + high / 2;
+           if(cardList[middle] == target)
+           {
+               return true;
+           }
+           else
+           {
+               if(cardList[middle] < target)
+               {
+                   low = middle + 1;
+               }
+               if(cardList[middle] > target)
+               {
+                   high = middle - 1;
+               }
+           }
+       }
+       return false;
+   }
+
+    List<int> sortCardsBubble(List<int> cardlist) //** rudimentary sort for now **
+    {                                               //** O(n^2) **
+        bool swapping = true; //set to true to get things started
+        while(swapping)//checks if a swap has been made this loop, if it has, the list is potentially unsorted
+        {                                                           //if it happens we go to return
+            swapping = false;  //turns it off at the start of the loop as potnetially we are not swapping
+            for(int i = 1; i < cardlist.Count; i++) //iterates through our card list once.
             {
-                return true;
-            }
-            else
+            if(cardlist[i-1] > cardlist[i]) //if index to the right is bigger we need to swap the positions 
             {
-                if(deck[middle] < target)
-                {
-                    low = middle + 1;
-                }
-                if(deck[middle] > target)
-                {
-                    high = middle - 1;
-                }
+                int temp = cardlist[i]; //temp variable to hold right position
+                cardlist[i] = cardlist[i-1]; //set right position to the left position
+                cardlist[i-1] = temp; //set the left position to the temp(previously right) position
+                swapping = true; //we have made a swap this iteration so set this to true as the list... 
+            }                                                     //was unsorted this pass. Pass again. 
             }
         }
-        return false
+        return cardlist; //return the now sorted list
     }
 
-    void sortCardsBubble() //rudimentary sort for now - also looks at cards not ints so wont work yet
-    {
-        bool swapping = true
-        end = deck.Count()
-        for(i = 1; i < deck.Count(); i++)
-        {
-            swapping = false;
-            if(deck[i-1] > deck[i])
-            {
-                temp = deck[i];
-                deck[i] = deck[i-1];
-                deck[i-1] = temp
-                swapping = true
-            }    
-        }
-        return deck
-    }
-
-    List<int> sortCardsMerge(List<int> arr) //using a list til cards are able to imliment this
+    List<int> sortCardsMerge(List<int> arr) 
     {                                       //realisitcally am i going to be sorting large numbers 
                                             //of cards enough to justify this? no. Was it fun? Yes.
-        if(arr.Count() < 2)                 //O(n log n)?
+        if(arr.Count < 2)                 //O(n log n)?
         {
             return arr;
         }

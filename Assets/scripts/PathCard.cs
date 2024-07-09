@@ -2,19 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PathCardActual : MonoBehaviour
+
+public class PathCard : MonoBehaviour
 {
     public PathCardData data;
-    public string name;
-    public string cardDescription;
-    public string[] choiceTexts;
+    new public string name;
+    public int cardNumber;
+    public string cardActivateText;
+    //public string[] choiceTexts;
     //public string[] choiceOutcomes;
     void Start()
     {
          name = data.cardTitle;
-         cardDescription = data.cardDescription;
-         choiceTexts = data.choiceTexts;
+         cardActivateText = data.cardDescription;
+       //  cardNumber = data.cardNumber;
+        // choiceTexts = data.choiceTexts;
     }
 
+    
 
 }
