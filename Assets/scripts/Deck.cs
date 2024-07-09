@@ -52,7 +52,7 @@ public class Deck : MonoBehaviour
 
     }
 
-    bool containsCard(Card target) 
+    bool containsCard(Card target) //binary search because why not
     {
         int low = 0;
         int high = deck.Count() - 1;
@@ -78,7 +78,7 @@ public class Deck : MonoBehaviour
         return false
     }
 
-    void sortCardsBubble() //rudimentary sort for now
+    void sortCardsBubble() //rudimentary sort for now - also looks at cards not ints so wont work yet
     {
         bool swapping = true
         end = deck.Count()
@@ -96,4 +96,50 @@ public class Deck : MonoBehaviour
         return deck
     }
 
+    List<int> sortCardsMerge(List<int> arr) //using a list til cards are able to imliment this
+    {                                       //realisitcally am i going to be sorting large numbers 
+                                            //of cards enough to justify this? no. Was it fun? Yes.
+        if(arr.Count() < 2)
+        {
+            return arr;
+        }
+        int mid = arr.Count / 2;
+        List<int> left = arr.GetRange(0, mid);
+        List<int> right = arr.GetRange(mid, arr.Count - mid);
+        List<int> sortedLeft = sortCardsMerge(left);
+        List<int> sortedRight = sortCardsMerge(right);
+        List<int> mergedList = cardsMerge(sortedLeft, sortedRight);
+        return mergedList;
+    }
+
+    List<int> cardsMerge(List<int> left, List<int> right)
+    {
+        List<int> mergedList = new List<int>();
+        int i = 0;
+        int j = 0;
+        while(i < left.Count && j < right.Count)
+        {
+            if(left[i] < right[j])
+            {
+                mergedList.Add(left[i]);
+                i++;
+            }
+            else
+            {
+                mergedList.Add(right[j]);
+                j++;
+            }
+        }
+        while(left.Count > i)
+        {
+            mergedList.Add(left[i]);
+            i++;
+        }
+        while(right.Count > j)
+        {
+            mergedList.Add(right[j]);
+            j++;
+        }
+        return mergedList;
+    }
 }
