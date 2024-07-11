@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ValueTracker : MonoBehaviour
 {
-public Sprite[] healthSprites;
+public Sprite[] valueSprites;
 private SpriteRenderer spriteRenderer;
 
     public void Start()
@@ -14,6 +14,6 @@ private SpriteRenderer spriteRenderer;
 
     public void changeSprite(int spriteNumber)
     {
-        spriteRenderer.sprite = healthSprites[spriteNumber];    
+        spriteRenderer.sprite = valueSprites[spriteNumber];    
     }
 }

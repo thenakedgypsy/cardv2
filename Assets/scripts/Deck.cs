@@ -53,7 +53,7 @@ public class Deck : MonoBehaviour
 
     }
 
-   bool containsCard(int target, List<int> cardList) //binary search because why not
+   bool containsCard(int target, List<int> cardList) //binary search because why not!
    {
        int low = 0;
        int high = cardList.Count - 1;
@@ -79,8 +79,10 @@ public class Deck : MonoBehaviour
        return false;
    }
 
-    List<int> sortCardsBubble(List<int> cardlist) //** rudimentary sort for now **
-    {                                               //** O(n^2) **
+
+//IM GOING TO BASH OUT A LOAD OF SORTING FUNCTIONS - most wont be used but its good practice:
+    List<int> sortCardsBubble(List<int> cardlist) //** rudimentary sort for now **//** O(n^2)**
+    {                                               
         bool swapping = true; //set to true to get things started
         while(swapping)//checks if a swap has been made this loop, if it has, the list is potentially unsorted
         {                                                           //if it happens we go to return
@@ -99,10 +101,10 @@ public class Deck : MonoBehaviour
         return cardlist; //return the now sorted list
     }
 
-    List<int> sortCardsMerge(List<int> arr) 
+    List<int> sortCardsMerge(List<int> arr) //O(n log n)? 
     {                                       //realisitcally am i going to be sorting large numbers 
                                             //of cards enough to justify this? no. Was it fun? Yes.
-        if(arr.Count < 2)                 //O(n log n)?
+        if(arr.Count < 2)    // single element gets pushed back to previous level
         {
             return arr;
         }
@@ -146,20 +148,55 @@ public class Deck : MonoBehaviour
         return mergedList;
     }
 
-    List<int> cardsInsertionSort(List<int> arr) //likely a more realistic sort for the numbers we will be looking at
-                                                //O(n^2) worstcase
+    List<int> cardsInsertionSort(List<int> arr) 
+                                                
     {
-        for(int i=0;i<arr.Count;i++)
+        for(int i=0;i<arr.Count;i++) 
         {
-            int j = i;
-            while(j>0 && arr[j-1] > arr[j])
+            int j = i;              
+            while(j>0 && arr[j-1] > arr[j]) 
             {
                 int temp = arr[j];
-                arr[j] = arr[j-1];
+                arr[j] = arr[j-1];          
                 arr[j-1] = temp;
-                j--;
+                j--;                        
             }
         }
         return arr;
     }
+
+    List<int> cardQuickSort(List<int> arr, int low, int high)
+    {
+        if(low < high)
+        {
+            int idx = cardPartitionSort(arr,low,high);
+            cardQuickSort(arr,low,idx-1);
+            cardQuickSort(arr,idx+1,high);
+        }
+        return arr;
+    }
+
+    int cardPartitionSort(List<int> arr, int low, int high)
+    {
+        int pivot = arr[high];
+        int i = low;
+        for(int j = low; j < high; j++)
+        {
+            if(arr[j] < pivot)
+            {
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                i++;
+            }
+        }
+        int temp2 = arr[i];
+        arr[i] = arr[high];
+        arr[high] = temp2;
+        return i;
+    }
+
+
+
+
 }

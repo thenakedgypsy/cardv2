@@ -6,6 +6,7 @@ using UnityEngine;
 public class PathCardData : ScriptableObject
 {
     public string cardTitle;
+    public int cardNumber;
     public string cardDescription;
     public string[] choiceTexts;
     public string[] choiceOutcomes;
